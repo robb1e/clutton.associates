@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+#
+# bin/dev — local build & dev server for the Clutton Associates site.
+#
+# Usage:
+#   bin/dev          start the live-reloading dev server (http://localhost:4000)
+#   bin/dev serve    same as above
+#   bin/dev build    build the static site into _site/ and exit
+#
+# Handles the Ruby setup automatically: the macOS system Ruby is too old for
+# modern Jekyll, so this finds a Homebrew Ruby (>= 3.0) and uses that.
+#
+set -euo pipefail
+
+# Always run from the repository root, wherever the script is called from.
+cd "$(dirname "$0")/.."
+
+# --- Locate a Ruby new enough for modern Jekyll (>= 3.0) -------------------
+ruby_ok() {
+  command -v ruby >/dev/null 2>&1 &&
+  ruby -e 'exit((RUBY_VERSION.split(".").map(&:to_i) <=> [3,0,0]) >= 0)' >/dev/null 2>&1
+}
+
+if ! ruby_ok; then
+  echo "System Ruby is too old for Jekyll — looking for a Homebrew Ruby..."
+  for name in ruby ruby@4 ruby@3.4 ruby@3.3 ruby@3; do
+    for prefix in /opt/homebrew/opt /usr/local/opt; do
+      if [ -x "$prefix/$name/bin/ruby" ]; then
+        export PATH="$prefix/$name/bin:$PATH"
+        ruby_ok && break 2
+      fi
+    done
+  done
+fi
+
+if ! ruby_ok; then
+  echo "Error: need Ruby >= 3.0. Install one with:  brew install ruby" >&2
+  exit 1
+fi
+echo "Ruby $(ruby -e 'print RUBY_VERSION') — $(command -v ruby)"
+
+# --- Ensure Bundler and gem dependencies are present -----------------------
+if ! command -v bundle >/dev/null 2>&1; then
+  echo "Installing Bundler..."
+  gem install bundler --no-document
+fi
+
+if ! bundle check >/dev/null 2>&1; then
+  echo "Installing gem dependencies..."
+  bundle install
+fi
+
+# --- Build or serve --------------------------------------------------------
+case "${1:-serve}" in
+  serve)
+    echo "Starting dev server — http://localhost:4000  (Ctrl+C to stop)"
+    exec bundle exec jekyll serve --livereload
+    ;;
+  build)
+    exec bundle exec jekyll build
+    ;;
+  *)
+    echo "Usage: bin/dev [serve|build]" >&2
+    exit 1
+    ;;
+esac

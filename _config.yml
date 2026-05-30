@@ -1,0 +1,43 @@
+title: Clutton Associates
+tagline: Software leadership, on demand
+description: >-
+  Clutton Associates Ltd provides fractional engineering leadership,
+  focused project work and coaching for technology organisations
+  navigating transition and transformation.
+url: "https://clutton.associates"
+baseurl: ""
+author: Robbie Clutton
+lang: en-GB
+
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+plugins:
+  - jekyll-sitemap
+
+# Site-wide contact details and links, referenced from layouts and pages.
+links:
+  calendly: "https://calendly.com/robbie-clutton/intro"
+  linkedin: "https://linkedin.com/in/robbieclutton"
+  blog: "https://blog.robbieclutton.com"
+  email: "robbie@robbieclutton.com"
+
+# Source files that should not be published to the built site.
+exclude:
+  - offerings.md
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - CLAUDE.md
+  - bin
+  - vendor
+  - .github
+  - .gitignore
+
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
