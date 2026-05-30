@@ -18,7 +18,7 @@ hide_cta: true
   <div class="contact-card">
     <h3>Email</h3>
     <p>Prefer to write first? Drop me a line and I'll get back to you.</p>
-    <a href="mailto:robbie@robbieclutton.com">robbie@robbieclutton.com</a>
+    <a href="mailto:{{ site.links.email }}">{{ site.links.email }}</a>
   </div>
   <div class="contact-card">
     <h3>LinkedIn</h3>
