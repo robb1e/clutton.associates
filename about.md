@@ -46,17 +46,25 @@ Saving a team several months of work simply by asking a careful series of questi
 
 ## Writing &amp; speaking
 
+### Latest from the blog
+
+{% if site.data.posts and site.data.posts.size > 0 %}
+<ul class="writing-list">
+{% for post in site.data.posts %}  <li><span class="w-date">{{ post.date_display }}</span><a href="{{ post.url }}">{{ post.title }}</a>{% if post.summary != "" %}<p class="w-summary">{{ post.summary }}</p>{% endif %}</li>
+{% endfor %}</ul>
+
+Read everything at [blog.robbieclutton.com]({{ site.links.blog }}).
+{% else %}
+Recent writing lives on [blog.robbieclutton.com]({{ site.links.blog }}).
+{% endif %}
+
+### Talks &amp; elsewhere
+
 <ul class="writing-list">
   <li><span class="w-date">The New Stack · 2023</span><a href="https://thenewstack.io/making-career-decisions-during-a-time-of-tech-layoffs-and-ai/">Making career decisions during a time of tech layoffs and AI</a></li>
-  <li><span class="w-date">Blog · 2023</span><a href="https://blog.robbieclutton.com/p/on-hiring">On hiring</a></li>
-  <li><span class="w-date">Blog · 2023</span><a href="https://blog.robbieclutton.com/p/on-decision-hygiene">On decision hygiene</a></li>
-  <li><span class="w-date">Blog · 2023</span><a href="https://blog.robbieclutton.com/p/on-focus-and-productivity">On focus and productivity</a></li>
-  <li><span class="w-date">Blog</span><a href="https://blog.robbieclutton.com/p/on-levelling-learning-and-development">On levelling, learning and development</a></li>
-  <li><span class="w-date">Talk · 2016</span><a href="https://speakerdeck.com/robb1e/a-brief-history-of-agile">A brief history of agile</a></li>
-  <li><span class="w-date">Talk · 2013</span><a href="https://speakerdeck.com/robb1e/sustainable-small-architecture">Startup architecture: sustainable small architecture</a></li>
+  <li><span class="w-date">Talk · 2016</span><a href="{{ site.links.speakerdeck }}/a-brief-history-of-agile">A brief history of agile</a></li>
+  <li><span class="w-date">Talk · 2013</span><a href="{{ site.links.speakerdeck }}/sustainable-small-architecture">Startup architecture: sustainable small architecture</a></li>
 </ul>
-
-More writing is on the [blog](https://blog.robbieclutton.com).
 
 ## And one thing most people don't know
 

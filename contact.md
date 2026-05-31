@@ -23,12 +23,27 @@ hide_cta: true
   <div class="contact-card">
     <h3>LinkedIn</h3>
     <p>Connect, or read more about my background and career.</p>
-    <a href="https://linkedin.com/in/robbieclutton">linkedin.com/in/robbieclutton</a>
+    <a href="{{ site.links.linkedin }}">linkedin.com/in/robbieclutton</a>
   </div>
   <div class="contact-card">
-    <h3>Read more</h3>
-    <p>Thoughts on leadership, hiring and ways of working.</p>
-    <a href="https://blog.robbieclutton.com">blog.robbieclutton.com</a>
+    <h3>GitHub</h3>
+    <p>Code, side projects and the occasional open-source contribution.</p>
+    <a href="{{ site.links.github }}">github.com/robb1e</a>
+  </div>
+  <div class="contact-card">
+    <h3>Blog</h3>
+    <p>Writing on leadership, hiring and ways of working.</p>
+    <a href="{{ site.links.blog }}">blog.robbieclutton.com</a>
+  </div>
+  <div class="contact-card">
+    <h3>Speakerdeck</h3>
+    <p>Slides from talks on agile, architecture and engineering practice.</p>
+    <a href="{{ site.links.speakerdeck }}">speakerdeck.com/robb1e</a>
+  </div>
+  <div class="contact-card">
+    <h3>Personal site</h3>
+    <p>Robbie's personal page — apps and projects outside the business.</p>
+    <a href="{{ site.links.personal }}">robbieclutton.com</a>
   </div>
 </div>
 

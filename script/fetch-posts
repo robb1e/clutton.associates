@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+# script/fetch-posts
+#
+# Fetches the latest posts from the Substack RSS feed and writes them to
+# _data/posts.yml so the Jekyll template can render summaries at build time.
+#
+# Failures are non-fatal: on error an empty _data/posts.yml is written and
+# the about-page template falls back to a "read on the blog" link, so the
+# site deploy is never blocked by Substack being temporarily unreachable.
+
+require "net/http"
+require "uri"
+require "rexml/document"
+require "yaml"
+require "fileutils"
+require "date"
+
+FEED_URL      = "https://blog.robbieclutton.com/feed"
+OUTPUT        = File.expand_path("../../_data/posts.yml", __FILE__)
+MAX           = 5
+SUMMARY_CHARS = 180
+
+def truncate(text, limit)
+  return text if text.length <= limit
+  text[0, limit].sub(/\s+\S*\z/, "") + "…"
+end
+
+posts = []
+
+begin
+  uri = URI.parse(FEED_URL)
+  body = Net::HTTP.start(uri.host, uri.port, use_ssl: true,
+                        open_timeout: 10, read_timeout: 15) do |http|
+    res = http.get(uri.request_uri,
+                   "User-Agent" => "clutton.associates-feed-fetcher/1.0")
+    raise "HTTP #{res.code} #{res.message}" unless res.is_a?(Net::HTTPSuccess)
+    res.body
+  end
+
+  doc = REXML::Document.new(body)
+
+  REXML::XPath.each(doc, "//item").first(MAX).each do |item|
+    title = item.elements["title"]&.text.to_s.strip
+    link  = item.elements["link"]&.text.to_s.strip
+    pub   = item.elements["pubDate"]&.text.to_s.strip
+    desc  = item.elements["description"]&.text.to_s.strip
+
+    next if title.empty? || link.empty?
+
+    # Strip any inline HTML and collapse whitespace, then trim.
+    summary = desc.gsub(/<[^>]+>/, " ").gsub(/\s+/, " ").strip
+    summary = truncate(summary, SUMMARY_CHARS)
+
+    date = begin
+      DateTime.parse(pub)
+    rescue StandardError
+      nil
+    end
+
+    posts << {
+      "title"        => title,
+      "url"          => link,
+      "date"         => date ? date.strftime("%Y-%m-%d") : nil,
+      "date_display" => date ? date.strftime("%-d %b %Y") : pub,
+      "summary"      => summary,
+    }
+  end
+
+  puts "Fetched #{posts.size} post(s) from #{FEED_URL}"
+rescue StandardError => e
+  warn "Failed to fetch posts: #{e.class}: #{e.message}"
+  warn "Writing empty _data/posts.yml; build will continue without the feed."
+end
+
+FileUtils.mkdir_p(File.dirname(OUTPUT))
+File.write(OUTPUT, posts.to_yaml)

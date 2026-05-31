@@ -18,10 +18,13 @@ plugins:
 
 # Site-wide contact details and links, referenced from layouts and pages.
 links:
-  calendly: "https://calendly.com/robbie-clutton/intro"
-  linkedin: "https://linkedin.com/in/robbieclutton"
-  blog: "https://blog.robbieclutton.com"
-  email: "robbie@clutton.associates"
+  calendly:    "https://calendly.com/robbie-clutton/intro"
+  email:       "robbie@clutton.associates"
+  linkedin:    "https://linkedin.com/in/robbieclutton"
+  github:      "https://github.com/robb1e"
+  speakerdeck: "https://speakerdeck.com/robb1e"
+  blog:        "https://blog.robbieclutton.com"
+  personal:    "https://robbieclutton.com"
 
 # Source files that should not be published to the built site.
 exclude:

@@ -22,6 +22,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Fetch latest blog posts
+        # Writes _data/posts.yml; the script handles its own errors and
+        # produces an empty file on failure so the build never blocks here.
+        run: script/fetch-posts
+        continue-on-error: true
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Build with Jekyll

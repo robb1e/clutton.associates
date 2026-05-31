@@ -41,18 +41,31 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
-        <div>
+        <div class="footer-brand-block">
           <p class="footer-brand">Clutton Associates</p>
           <p>Software leadership, on demand.</p>
         </div>
-        <ul class="footer-links">
-          <li><a href="{{ '/services/' | relative_url }}">Services</a></li>
-          <li><a href="{{ '/coaching/' | relative_url }}">Coaching</a></li>
-          <li><a href="{{ '/about/' | relative_url }}">About</a></li>
-          <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
-          <li><a href="{{ site.links.linkedin }}">LinkedIn</a></li>
-          <li><a href="{{ site.links.blog }}">Blog</a></li>
-        </ul>
+        <div class="footer-nav">
+          <div>
+            <p class="footer-heading">Site</p>
+            <ul class="footer-links">
+              <li><a href="{{ '/services/' | relative_url }}">Services</a></li>
+              <li><a href="{{ '/coaching/' | relative_url }}">Coaching</a></li>
+              <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+              <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="footer-heading">Elsewhere</p>
+            <ul class="footer-links">
+              <li><a href="{{ site.links.linkedin }}">LinkedIn</a></li>
+              <li><a href="{{ site.links.github }}">GitHub</a></li>
+              <li><a href="{{ site.links.speakerdeck }}">Speakerdeck</a></li>
+              <li><a href="{{ site.links.blog }}">Blog</a></li>
+              <li><a href="{{ site.links.personal }}">robbieclutton.com</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div class="footer-bottom">
         <span>&copy; {{ 'now' | date: "%Y" }} Clutton Associates Ltd. All rights reserved.</span>

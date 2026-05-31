@@ -6,6 +6,7 @@
 #   bin/dev          start the live-reloading dev server (http://localhost:4000)
 #   bin/dev serve    same as above
 #   bin/dev build    build the static site into _site/ and exit
+#   bin/dev posts    refresh _data/posts.yml from the Substack RSS feed
 #
 # Handles the Ruby setup automatically: the macOS system Ruby is too old for
 # modern Jekyll, so this finds a Homebrew Ruby (>= 3.0) and uses that.
@@ -59,8 +60,11 @@ case "${1:-serve}" in
   build)
     exec bundle exec jekyll build
     ;;
+  posts)
+    exec ruby script/fetch-posts
+    ;;
   *)
-    echo "Usage: bin/dev [serve|build]" >&2
+    echo "Usage: bin/dev [serve|build|posts]" >&2
     exit 1
     ;;
 esac
